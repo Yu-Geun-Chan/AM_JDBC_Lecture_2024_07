@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS `AM_JDBC_2024_07`;
 CREATE DATABASE `AM_JDBC_2024_07`;
 USE `AM_JDBC_2024_07`;
 
-SHOW TABLES;
-
 CREATE TABLE article(
                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                         regDate DATETIME NOT NULL,
@@ -60,6 +58,8 @@ loginId = 'test2',
 loginPw = 'test2',
 `name` = '홍길동';
 
+###############################################################################
+
 ## 게시글 테스트 데이터 대량 생성
 INSERT INTO article
 SET regDate = NOW(),
@@ -68,16 +68,22 @@ title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
 `body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
 
 SELECT *
-FROM article;
+FROM article
+ORDER BY id DESC;
 
 SELECT *
 FROM `member`;
 
 ###############################################################################
-INSERT INTO article
+SELECT A.*, M.name AS extra__writer
+FROM article A
+         INNER JOIN `member` M
+                    ON A.memberId = M.id
+
+    INSERT INTO article
 SET regDate = NOW(),
-updateDate = NOW()
-title = 'abc', `body`= 'abcd';
+    updateDate = NOW()
+    title = 'abc', `body`= 'abcd';
 
 
 SELECT COUNT(*) > 0
