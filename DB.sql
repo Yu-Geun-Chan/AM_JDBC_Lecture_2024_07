@@ -21,20 +21,31 @@ CREATE TABLE `member`(
                          `name` CHAR(100) NOT NULL
 );
 
-SELECT *
-FROM article;
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
-SELECT *
-FROM `member`;
-
-###############################################################################
+## 회원 테스트 데이터 생성
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+title = '제목1',
+`body` = '내용1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
-`body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
+memberId = 1,
+title = '제목2',
+`body` = '내용2';
 
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+title = '제목3',
+`body` = '내용3';
+
+## 회원 테스트 데이터 생성
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -49,6 +60,36 @@ loginId = 'test2',
 loginPw = 'test2',
 `name` = '홍길동';
 
+## 게시글 테스트 데이터 대량 생성
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = CONCAT('제목', SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
+`body` = CONCAT('내용', SUBSTRING(RAND() * 1000 FROM 1 FOR 2));
+
+SELECT *
+FROM article;
+
+SELECT *
+FROM `member`;
+
+###############################################################################
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW()
+title = 'abc', `body`= 'abcd';
+
+
+SELECT COUNT(*) > 0
+FROM `member`
+WHERE loginId = 'test2'
+
+SELECT COUNT(*) > 0
+FROM `member`
+WHERE loginId = 'test3'
+
+SELECT 1 + 1;
+SELECT 1 > 1;
 
 SELECT NOW();
 
